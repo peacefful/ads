@@ -1,6 +1,12 @@
 <!--Страница всех объявлений-->
 
 <template>
+  <div class="flex flex-col">
+    <strong>Общее количество объявлений: {{adsList.length}}</strong>
+    <strong>Инстаграм объявлений: {{filterAds('instagram')}}</strong>
+    <strong>Телеграм объявлений: {{filterAds('telegram')}}</strong>
+    <strong>Вацап объявлений: {{filterAds('whatsapp')}}</strong>
+  </div>
   <ul>
 <!--    Через цикл выводим каждое объявление-->
     <li v-for="(ads, index) in adsList" :key="index">
@@ -26,6 +32,15 @@ import type { TAdsForm } from '@/components'
 import { ref } from 'vue'
 
 const adsList = ref<TAdsForm[]>([])
+
+const filterAds = (type: string) => {
+  const filteredData = adsList.value.filter((ad) => ad.adsType === type)
+  return filteredData.length
+}
+
+const instagramAds = filterAds('instagram')
+const telegramAds = filterAds('telegram')
+const whatsAppAds = filterAds('whatsapp')
 
 // Функция для отображения фотографии к объявлению
 const getFileUrl = (file: string | File | null): string => {
